@@ -1,0 +1,35 @@
+name: Mirror approved Android APK
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - mirror-release.cjs
+      - .github/workflows/mirror-apk.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: approved-android-apk
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Mirror verified APK to GitHub Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error \
+            "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/mirror-release.cjs" \
+            --output "$RUNNER_TEMP/mirror-release.cjs"
+          node "$RUNNER_TEMP/mirror-release.cjs"
