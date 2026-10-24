@@ -1,9 +1,9 @@
 # ISLAHANDA public Android download
 
-Public installer page for ISLAHANDA enumerators.
+Public portal: https://khenq.github.io/islahanda-download/
 
-The Download button points to the permanent Google Drive file `ISLAHANDA.apk`. Approved releases replace the contents of that file without changing its Drive ID. The app’s built-in updater continues to use the versioned APK and `latest-android.json`.
+The Download button uses `https://github.com/KhenQ/islahanda-download/releases/latest/download/ISLAHANDA.apk`. Public visitors download directly from GitHub Releases without a Google account. Each versioned release contains an asset named `ISLAHANDA.apk`; older releases remain available.
 
-Publish this repository with GitHub Pages from the `main` branch and `/` root. The page includes its styles and artwork, so `index.html` is self-contained.
+The existing Android in-app updater continues using the versioned Google Drive APK and `latest-android.json`. Its publisher command does not change. The GitHub workflow checks the public Drive manifest approximately every 15 minutes (GitHub may delay scheduled runs), verifies APK checksum, package, version and pinned signing identity, and mirrors new approved releases. It can also be run immediately from Actions. No Google credentials or private signing keys are stored in this repository.
 
-Only public website files belong here. APK publishing credentials, signing keys, household data and app source are not part of this repository.
+GitHub Pages publishes `main` at `/`. `index.html` includes its styles and artwork.
