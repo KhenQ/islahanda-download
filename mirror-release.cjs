@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const expectedPackage='ph.catanduanes.islahanda.prototype',expectedSigner='0003e79050aae4840c00b0c15143aa360ceb063da87161cee20510c893fc1a9a';
 const manifestUrl='https://drive.usercontent.google.com/download?id=1sM8gVgIEAQzTa56qiWrIjOSZB3tvAnDf&export=download&confirm=t';
 function validateManifest(m){
- if(m.schemaVersion!==1||m.enabled!==true||m.applicationId!==expectedPackage||m.signerSha256!==expectedSigner||!Number.isSafeInteger(m.versionCode)||m.versionCode<82||!/^\d+\.\d+\.\d+$/.test(m.versionName)||!/^[-\w]{10,200}$/.test(m.apkFileId)||!/^([a-f0-9]{64})$/.test(m.sha256)||!Number.isSafeInteger(m.bytes)||m.bytes<1000000||m.bytes>268435456)throw Error('Unapproved or invalid Android release manifest.');
+ if(m.schemaVersion!==1||m.enabled!==true||m.applicationId!==expectedPackage||m.signerSha256!==expectedSigner||!Number.isSafeInteger(m.versionCode)||m.versionCode<82||!/^\d+\.\d+(?:\.\d+)?$/.test(m.versionName)||!/^[-\w]{10,200}$/.test(m.apkFileId)||!/^([a-f0-9]{64})$/.test(m.sha256)||!Number.isSafeInteger(m.bytes)||m.bytes<1000000||m.bytes>268435456)throw Error('Unapproved or invalid Android release manifest.');
  return m;
 }
 function compareLatest(latest,m){
