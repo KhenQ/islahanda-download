@@ -1,0 +1,16 @@
+name: Withdraw ISLAHANDA 1.1.5
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  withdraw:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Return release to private draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "KhenQ/islahanda-download"
+          release_id=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/v1.1.5" --jq .id)
+          gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$release_id" -F draft=true -f make_latest=false --jq "{tag: .tag_name, draft: .draft}"
